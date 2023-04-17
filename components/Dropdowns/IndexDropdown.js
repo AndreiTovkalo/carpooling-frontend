@@ -53,7 +53,7 @@ const IndexDropdown = () => {
             Dashboard
           </a>
         </Link>
-        <Link href="/admin/settings">
+        <Link href="/edit-profile">
           <a
             href="#pablo"
             className={
@@ -91,7 +91,7 @@ const IndexDropdown = () => {
         >
           Auth Layout
         </span>
-        <Link href="/auth/login">
+        <Link href="/login">
           <a
             href="#pablo"
             className={
@@ -101,7 +101,7 @@ const IndexDropdown = () => {
             Login
           </a>
         </Link>
-        <Link href="/auth/register">
+        <Link href="/register">
           <a
             href="#pablo"
             className={

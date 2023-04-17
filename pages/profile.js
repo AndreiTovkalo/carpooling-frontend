@@ -2,11 +2,12 @@ import React from "react";
 
 import Navbar from "components/Navbars/AuthNavbar.js";
 import Footer from "components/Footers/Footer.js";
+import Admin from "../layouts/Admin";
+import User from "../layouts/User";
 
 export default function Profile() {
   return (
     <>
-      <Navbar transparent />
       <main className="profile-page">
         <section className="relative block h-500-px">
           <div
@@ -80,15 +81,15 @@ export default function Profile() {
                           10
                         </span>
                         <span className="text-sm text-blueGray-400">
-                          Photos
+                          Trips
                         </span>
                       </div>
                       <div className="lg:mr-4 p-3 text-center">
                         <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                          89
+                          4.9
                         </span>
                         <span className="text-sm text-blueGray-400">
-                          Comments
+                          Rating
                         </span>
                       </div>
                     </div>
@@ -140,3 +141,5 @@ export default function Profile() {
     </>
   );
 }
+
+Profile.layout = User;

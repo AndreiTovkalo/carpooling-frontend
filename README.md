@@ -39,7 +39,7 @@ Here are all the page from the project:
 - [Presentation](https://demos.creative-tim.com/notus-nextjs/?ref=nnjs-github-readme)
 - Admin Samples
   - [Dashboard](https://demos.creative-tim.com/notus-nextjs/admin/dashboard?ref=nnjs-github-readme)
-  - [Settings](https://demos.creative-tim.com/notus-nextjs/admin/settings?ref=nnjs-github-readme)
+  - [EditProfile](https://demos.creative-tim.com/notus-nextjs/admin/settings?ref=nnjs-github-readme)
   - [Tables](https://demos.creative-tim.com/notus-nextjs/admin/tables?ref=nnjs-github-readme)
   - [Maps](https://demos.creative-tim.com/notus-nextjs/admin/maps?ref=nnjs-github-readme)
 - Authentication Samples
@@ -172,7 +172,7 @@ notus-nextjs
 │   ├── admin
 │   │   ├── dashboard.js
 │   │   ├── maps.js
-│   │   ├── settings.js
+│   │   ├── edit-profile.js
 │   │   └── tables.js
 │   ├── auth
 │   │   ├── login.js
