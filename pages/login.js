@@ -1,13 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 
 // layout for page
 
 import Auth from "layouts/Auth.js";
+import { useAuth, withoutAuth } from "../contexts/AuthContext";
 
-export default function Login() {
+function Login() {
+  const { login } = useAuth();
+  const [values, setValues] = useState({ email: "", password: "" });
+
+  const handleChange = (field) => {
+    return (value) => {
+      setValues({ ...values, [field]: value.target.value });
+    };
+  };
+
+  const handleLogin = () => {
+    login(values);
+  };
+
   return (
-    <>
+    <Auth>
       <div className="container mx-auto px-4 h-full">
         <div className="flex content-center items-center justify-center h-full">
           <div className="w-full lg:w-4/12 px-4">
@@ -23,7 +37,11 @@ export default function Login() {
                     className="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
                     type="button"
                   >
-                    <img alt="googleIcon" className="w-5 mr-1" src="/img/google.svg" />
+                    <img
+                      alt="googleIcon"
+                      className="w-5 mr-1"
+                      src="/img/google.svg"
+                    />
                     Google
                   </button>
                 </div>
@@ -43,6 +61,8 @@ export default function Login() {
                     </label>
                     <input
                       type="email"
+                      value={values.email}
+                      onChange={handleChange("email")}
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder="Email"
                     />
@@ -57,6 +77,8 @@ export default function Login() {
                     </label>
                     <input
                       type="password"
+                      value={values.password}
+                      onChange={handleChange("password")}
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder="Password"
                     />
@@ -76,6 +98,7 @@ export default function Login() {
 
                   <div className="text-center mt-6">
                     <button
+                      onClick={handleLogin}
                       className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
                       type="button"
                     >
@@ -106,8 +129,8 @@ export default function Login() {
           </div>
         </div>
       </div>
-    </>
+    </Auth>
   );
 }
 
-Login.layout = Auth;
+export default withoutAuth(Login);

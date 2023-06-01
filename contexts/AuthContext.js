@@ -1,21 +1,36 @@
-import{ createContext, useState } from 'react';
+import { createContext, useState, useContext, useEffect } from "react";
 import api from "../utils/axios";
 import API from "../constants/API";
+import { removeToken, setToken } from "../utils/localStorage";
+import { useRouter } from "next/router";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  const login = async({email, password}) => {
+  const login = async ({ email, password }) => {
+    const token = await api.post(API.LOGIN, { email, password });
+    setToken(token.data);
 
-    const user = await api.post(API.LOGIN, {email, password});
-    console.log(user);
-    setIsLoggedIn(true);
+    const userData = await api.get(API.GET_USER);
+    setUser(userData.data);
   };
 
+  useEffect(() => {
+    api
+      .get(API.GET_USER)
+      .then((data) => setUser(data))
+      .catch((error) => {
+        console.log(error);
+        setUser(null);
+        removeToken();
+      });
+  }, []);
+
   const logout = () => {
-    setIsLoggedIn(false);
+    setUser(null);
+    removeToken();
   };
 
   return (
@@ -25,7 +40,36 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-
 export const useAuth = () => {
   return useContext(AuthContext);
+};
+
+export const withAuth = (Component) => {
+  const AuthComponent = (props) => {
+    const router = useRouter();
+
+    const { user } = useAuth(); // replace with actual authentication check
+    if (user === null) {
+      router.push("/login");
+      return null;
+    }
+    // render the authorized page
+    return <Component {...props} />;
+  };
+  return AuthComponent;
+};
+
+export const withoutAuth = (Component) => {
+  const AuthComponent = (props) => {
+    const router = useRouter();
+
+    const { user } = useAuth();
+    if (user !== null) {
+      router.push("/profile");
+      return null;
+    }
+    // render the authorized page
+    return <Component {...props} />;
+  };
+  return AuthComponent;
 };
