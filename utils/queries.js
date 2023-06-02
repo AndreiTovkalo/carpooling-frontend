@@ -9,8 +9,10 @@ export const QKeys = {
 export const useGetUser = (params, options) => {
   return useQuery(
     QKeys.User,
-    () => {
-      return api.get(`${API.GET_USER}`);
+    async () => {
+      const response = await api.get(`${API.GET_USER}`);
+
+      return response.data;
     },
     {
       ...options,

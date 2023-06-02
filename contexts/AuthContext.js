@@ -1,4 +1,10 @@
-import { createContext, useState, useContext, useEffect } from "react";
+import {
+  createContext,
+  useState,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+} from "react";
 import api from "../utils/axios";
 import API from "../constants/API";
 import { removeToken, setToken } from "../utils/localStorage";
@@ -8,6 +14,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [isLoading, setLoading] = useState(true);
 
   const login = async ({ email, password }) => {
     const token = await api.post(API.LOGIN, { email, password });
@@ -17,21 +24,28 @@ export const AuthProvider = ({ children }) => {
     setUser(userData.data);
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    setLoading(true);
     api
       .get(API.GET_USER)
-      .then((data) => setUser(data))
+      .then((data) => setUser(data.data))
       .catch((error) => {
         console.log(error);
         setUser(null);
         removeToken();
       });
+
+    setLoading(false);
   }, []);
 
   const logout = () => {
     setUser(null);
     removeToken();
   };
+
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
