@@ -5,6 +5,8 @@ import { useRouter } from "next/router";
 import NotificationDropdown from "components/Dropdowns/NotificationDropdown.js";
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
 import { IconAdjustments, IconCar, IconUser } from "@tabler/icons-react";
+import Image from "next/image";
+import jampling from "public/img/brand/jampling.png";
 
 const sidebarLinks = [
   {
@@ -50,7 +52,7 @@ export default function Sidebar() {
               href="#pablo"
               className="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
             >
-              RideShare+
+              <Image src={jampling} width={642} height={205} />
             </a>
           </Link>
           {/* User */}

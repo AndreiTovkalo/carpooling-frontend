@@ -25,7 +25,12 @@ export default function CardSettings() {
         console.log(values);
         setSubmitting(true);
         try {
-          await api.put("/user/edit-user", values);
+          const payload = {
+            ...values,
+            hireDate: new Date(values.hireDate).toJSON(),
+            birthday: new Date(values.birthday).toJSON(),
+          };
+          await api.put("/user/edit-user", payload);
         } catch (e) {
           console.error(e);
         } finally {
@@ -33,7 +38,7 @@ export default function CardSettings() {
         }
       }}
     >
-      {({ values, handleChange, isSubmitting, submitForm }) => (
+      {({ values, handleChange, isSubmitting, submitForm, setFieldValue }) => (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
             <div className="rounded-t bg-white mb-0 px-6 py-6">
@@ -120,8 +125,10 @@ export default function CardSettings() {
                         }}
                         disabled={isSubmitting}
                         slotProps={{ textField: { size: "small" } }}
-                        value={dayjs(new Date(values.birthday).getTime())}
-                        onChange={handleChange}
+                        value={dayjs(values.birthday)}
+                        onChange={(value, context) => {
+                          setFieldValue("birthday", Date.parse(value));
+                        }}
                       />
                     </div>
                   </div>
@@ -141,8 +148,10 @@ export default function CardSettings() {
                         }}
                         disabled={isSubmitting}
                         slotProps={{ textField: { size: "small" } }}
-                        value={dayjs(new Date(values.hireDate).getTime())}
-                        onChange={handleChange}
+                        value={dayjs(values.hireDate)}
+                        onChange={(value, context) => {
+                          setFieldValue("hireDate", Date.parse(value));
+                        }}
                       />
                     </div>
                   </div>

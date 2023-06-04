@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
     setUser(userData.data);
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setLoading(true);
     api
       .get(API.GET_USER)
